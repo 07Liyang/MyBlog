@@ -16,16 +16,24 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path  # 这里引入include()方法
 from django.conf import settings
 from django.conf.urls.static import static
+from utils.upload import upload_file   # 富文本编辑器上传图片方法
 
 urlpatterns = [
-    # ... the rest of your URLconf goes here ...
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path('admin/', admin.site.urls),
+    # path('users/', include('users.urls')),
+    # path('', include('blog.urls')),
 
+    # path('uploads/', upload_file, name='uploads')   # 上传图片url
+
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # 配置静态文件url
+
+
+# 配置用户上传文件url
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# urlpatterns = [
-#     path("admin/", admin.site.urls),
-# ]
+# admin.site.site_header = "Management back office"
+# admin.site.index_title = "Management back office"
+# admin.site.site_title = "The administrator is logged in."
